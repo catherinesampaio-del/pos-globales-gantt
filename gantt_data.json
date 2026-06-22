@@ -1,0 +1,56 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "nome": "Planejamento Inicial - POS Globales",
+      "tipo": "planejamento",
+      "inicio": "2026-01-01",
+      "fim": "2026-01-31",
+      "responsavel": "Equipe COBU",
+      "status": "concluido",
+      "descricao": "Levantamento de requisitos e definição de escopo",
+      "dependencias": []
+    },
+    {
+      "id": 2,
+      "nome": "Desenvolvimento - Módulo de Vendas",
+      "tipo": "desenvolvimento",
+      "inicio": "2026-02-01",
+      "fim": "2026-04-30",
+      "responsavel": "Dev Team",
+      "status": "em_andamento",
+      "descricao": "Implementação do módulo principal de vendas",
+      "dependencias": [
+        1
+      ]
+    },
+    {
+      "id": 3,
+      "nome": "Homologação - Testes Integrados",
+      "tipo": "homologacao",
+      "inicio": "2026-05-01",
+      "fim": "2026-06-15",
+      "responsavel": "QA Team",
+      "status": "em_andamento",
+      "descricao": "Testes de integração e validação",
+      "dependencias": [
+        2
+      ]
+    },
+    {
+      "id": 4,
+      "nome": "Deploy em Produção",
+      "tipo": "producao",
+      "inicio": "2026-06-16",
+      "fim": "2026-06-30",
+      "responsavel": "DevOps",
+      "status": "nao_iniciado",
+      "descricao": "Implantação em ambiente produtivo",
+      "dependencias": [
+        3
+      ]
+    }
+  ],
+  "next_id": 5,
+  "updated_at": "2026-06-22 19:30:00"
+}
