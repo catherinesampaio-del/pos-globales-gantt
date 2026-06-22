@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS Globales - Gantt Chart</title>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+            padding: 2rem 2.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .header-title {
+            color: white;
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .header-subtitle {
+            color: #dbeafe;
+            font-size: 0.875rem;
+            margin-top: 0.375rem;
+            font-weight: 400;
+        }
+        
+        .header-badges {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.813rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .stat-label {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+            color: #1e293b;
+        }
+        
+        .stat-icon {
+            font-size: 1.5rem;
+            float: right;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #1e293b;
+        }
+        
+        .legend {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div>
+                <h1 class="header-title">
+                    <span>📊</span>
+                    <span>POS Globales — Tracking de Atividades</span>
+                </h1>
+                <p class="header-subtitle">Última atualização: 22/06/2026 às 19:39</p>
+            </div>
+            <div class="header-badges">
+                <span class="badge">🟢 3 Ativas</span>
+                <span class="badge">✅ 0 Concluídas</span>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-icon">📋</span>
+                <div class="stat-label">Total de Tarefas</div>
+                <div class="stat-value">3</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">⚡</span>
+                <div class="stat-label">Em Andamento</div>
+                <div class="stat-value">3</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">✅</span>
+                <div class="stat-label">Concluídas</div>
+                <div class="stat-value">0</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">⏱️</span>
+                <div class="stat-label">Duração Total</div>
+                <div class="stat-value">6m</div>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <h2 class="chart-title">Cronograma do Projeto</h2>
+            <div id="gantt-chart"></div>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #3b82f6;"></div>
+                    <span>Planejamento</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #8b5cf6;"></div>
+                    <span>Desenvolvimento</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f59e0b;"></div>
+                    <span>Homologação</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #10b981;"></div>
+                    <span>Produção</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>💡 Para atualizar este cronograma, contate o COBU Concierge</p>
+        <p style="margin-top: 0.5rem; opacity: 0.7;">Gerado automaticamente pelo Gantt Navigator</p>
+    </footer>
+<div id="gantt-chart">d04464a6-cf6c-45d9-827c-8c343a963087" class="plotly-graph-div" style="height:420px; width:100%;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("d04464a6-cf6c-45d9-827c-8c343a963087")) {                    Plotly.newPlot(                        "d04464a6-cf6c-45d9-827c-8c343a963087",                        [{"base":["2026-06-17T00:00:00.000000000","2026-06-19T00:00:00.000000000","2026-06-17T00:00:00.000000000","2026-06-22T00:00:00.000000000"],"customdata":[["Banner enviado para conhecimento (17\u002f06)","Conclu\u00eddo"],["Op\u00e7\u00e3o de melhoria enviada (19\u002f06) \u2014 hor\u00e1rio Espanha, sem retorno no dia","Conclu\u00eddo"],["Briefing enviado com ajustes para Globales (17\u002f06)","Conclu\u00eddo"],["Betina confirmou: sorteio de 1 noite no hotel (22\u002f06)","Conclu\u00eddo"]],"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eStatus=%{customdata[1]}\u003cbr\u003eInicio=%{base|%d\u002f%m\u002f%Y}\u003cbr\u003eFase=%{text}\u003cbr\u003eDetalhe=%{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\ud83d\udce4 Envio p\u002f conhecimento","\u270f\ufe0f Melhoria de banner + link","\ud83d\udccb Briefing + Produ\u00e7\u00e3o","\u2705 Confirma\u00e7\u00e3o do sorteio"],"legendgroup":"Conclu\u00eddo","marker":{"color":"#2ecc71","pattern":{"shape":""},"line":{"color":"rgba(0,0,0,0.2)","width":1}},"name":"Conclu\u00eddo","orientation":"h","showlegend":true,"text":["\ud83d\udce4 Envio p\u002f conhecimento","\u270f\ufe0f Melhoria de banner + link","\ud83d\udccb Briefing + Produ\u00e7\u00e3o","\u2705 Confirma\u00e7\u00e3o do sorteio"],"textposition":"inside","x":{"dtype":"i4","bdata":"oHElBaBxJQWg4b4ZoHElBQ=="},"xaxis":"x","y":["Banner Juniper","Banner Juniper","Campanha Princess","Webinar Palmaia"],"yaxis":"y","type":"bar","textfont":{"color":"white","size":11},"insidetextanchor":"middle"},{"base":["2026-06-22T00:00:00.000000000"],"customdata":[["Juniper respondeu (22\u002f06): n\u00e3o saiu. Avaliando ajuste no banner deles para reenvio.","Aguardando"]],"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eStatus=%{customdata[1]}\u003cbr\u003eInicio=%{base|%d\u002f%m\u002f%Y}\u003cbr\u003eFase=%{text}\u003cbr\u003eDetalhe=%{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\u23f3 Aguardando ajuste \u002f reenvio"],"legendgroup":"Aguardando","marker":{"color":"#e67e22","pattern":{"shape":""},"line":{"color":"rgba(0,0,0,0.2)","width":1}},"name":"Aguardando","orientation":"h","showlegend":true,"text":["\u23f3 Aguardando ajuste \u002f reenvio"],"textposition":"inside","x":{"dtype":"i4","bdata":"oFFYLg=="},"xaxis":"x","y":["Banner Juniper"],"yaxis":"y","type":"bar","textfont":{"color":"white","size":11},"insidetextanchor":"middle"},{"base":["2026-06-22T00:00:00.000000000"],"customdata":[["Campanha no ar nas plataformas PY e USA desde 22\u002f06 \u2705","Ativo"]],"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eStatus=%{customdata[1]}\u003cbr\u003eInicio=%{base|%d\u002f%m\u002f%Y}\u003cbr\u003eFase=%{text}\u003cbr\u003eDetalhe=%{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\ud83d\ude80 Campanha ATIVA \u2014 PY + USA"],"legendgroup":"Ativo","marker":{"color":"#3498db","pattern":{"shape":""},"line":{"color":"rgba(0,0,0,0.2)","width":1}},"name":"Ativo","orientation":"h","showlegend":true,"text":["\ud83d\ude80 Campanha ATIVA \u2014 PY + USA"],"textposition":"inside","x":{"dtype":"i4","bdata":"oFFYLg=="},"xaxis":"x","y":["Campanha Princess"],"yaxis":"y","type":"bar","textfont":{"color":"white","size":11},"insidetextanchor":"middle"},{"base":["2026-06-22T00:00:00.000000000"],"customdata":[["Refazer convite com sorteio inclu\u00eddo para envio antes do dia 30","Em Produ\u00e7\u00e3o"]],"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eStatus=%{customdata[1]}\u003cbr\u003eInicio=%{base|%d\u002f%m\u002f%Y}\u003cbr\u003eFase=%{text}\u003cbr\u003eDetalhe=%{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\ud83c\udfa8 Produ\u00e7\u00e3o do novo convite"],"legendgroup":"Em Produ\u00e7\u00e3o","marker":{"color":"#9b59b6","pattern":{"shape":""},"line":{"color":"rgba(0,0,0,0.2)","width":1}},"name":"Em Produ\u00e7\u00e3o","orientation":"h","showlegend":true,"text":["\ud83c\udfa8 Produ\u00e7\u00e3o do novo convite"],"textposition":"inside","x":{"dtype":"i4","bdata":"oD3lHg=="},"xaxis":"x","y":["Webinar Palmaia"],"yaxis":"y","type":"bar","textfont":{"color":"white","size":11},"insidetextanchor":"middle"},{"base":["2026-06-30T00:00:00.000000000"],"customdata":[["Novo Webinar Palmaia \u2014 data confirmada: 30\u002f06","Agendado"]],"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eStatus=%{customdata[1]}\u003cbr\u003eInicio=%{base|%d\u002f%m\u002f%Y}\u003cbr\u003eFase=%{text}\u003cbr\u003eDetalhe=%{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\ud83d\udcc5 Webinar \u2014 Evento"],"legendgroup":"Agendado","marker":{"color":"#1abc9c","pattern":{"shape":""},"line":{"color":"rgba(0,0,0,0.2)","width":1}},"name":"Agendado","orientation":"h","showlegend":true,"text":["\ud83d\udcc5 Webinar \u2014 Evento"],"textposition":"inside","x":{"dtype":"i4","bdata":"oHElBQ=="},"xaxis":"x","y":["Webinar Palmaia"],"yaxis":"y","type":"bar","textfont":{"color":"white","size":11},"insidetextanchor":"middle"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"type":"date","title":{"text":""},"tickformat":"%d\u002f%m","dtick":86400000,"tickangle":0,"gridcolor":"#ecf0f1","showgrid":true,"zeroline":false,"range":["2026-06-15T00:00:00","2026-07-03T00:00:00"]},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":""},"categoryorder":"array","categoryarray":["Webinar Palmaia","Campanha Princess","Banner Juniper"],"autorange":"reversed","gridcolor":"#ecf0f1","showgrid":false},"legend":{"title":{"text":"\u003cb\u003eStatus\u003c\u002fb\u003e"},"tracegroupgap":0,"font":{"size":11},"orientation":"h","yanchor":"bottom","y":1.04,"xanchor":"right","x":1,"bgcolor":"rgba(255,255,255,0.8)","bordercolor":"#bdc3c7","borderwidth":1},"title":{"text":"\ud83d\udcca Gantt POS Globales \u2014 Junho 2026","font":{"size":22,"color":"#2c3e50","family":"Arial"},"x":0.5,"xanchor":"center"},"barmode":"overlay","shapes":[{"line":{"color":"#e74c3c","dash":"dash","width":2},"type":"line","x0":1782086400000.0,"x1":1782086400000.0,"xref":"x","y0":0,"y1":1,"yref":"y domain"}],"annotations":[{"font":{"color":"#e74c3c","size":12},"showarrow":false,"text":"\u003cb\u003eHOJE\u003c\u002fb\u003e","x":1782086400000.0,"xanchor":"center","xref":"x","y":1,"yanchor":"bottom","yref":"y domain"},{"font":{"color":"#7f8c8d","size":10},"showarrow":false,"text":"\ud83d\udca1 \u003ci\u003ePara atualizar: envie os dados ao COBU Concierge e o Gantt ser\u00e1 regenerado | Compartilhe este arquivo HTML com a equipe\u003c\u002fi\u003e","x":0.5,"xanchor":"center","xref":"paper","y":-0.16,"yref":"paper"}],"font":{"family":"Arial","size":12,"color":"#2c3e50"},"margin":{"l":180,"r":40,"t":100,"b":60},"hoverlabel":{"font":{"size":12,"family":"Arial"},"bgcolor":"white","bordercolor":"#bdc3c7"},"paper_bgcolor":"#f8f9fa","plot_bgcolor":"#ffffff","height":420},                        {"displayModeBar": true, "displaylogo": false, "modeBarButtonsToRemove": ["select2d", "lasso2d"], "toImageButtonOptions": {"format": "png", "filename": "gantt_pos_globales", "height": 500, "width": 1200, "scale": 2}, "responsive": true}                    )                };            </script>        </div>
+
+</body>
+</html>
